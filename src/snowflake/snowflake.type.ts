@@ -1,7 +1,7 @@
-export interface SnowflakeOptions {
+export type SnowflakeOptions = {
   dataCenter?: number;
   worker?: number;
   nodeId?: number;
   timestamp?: number;
   seqMask?: number;
-}
+};

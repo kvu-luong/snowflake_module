@@ -1,5 +1,5 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
-import { SnowflakeOptions } from './snowflake.interface';
+import { SnowflakeOptions } from './snowflake.type';
 import { createProvider } from './snowflake.provider';
 import { SnowflakeService } from './snowflake.service';
 

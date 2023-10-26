@@ -1,3 +1,3 @@
 export * from './snowflake/snowflake.module';
 export * from './snowflake/snowflake.service';
-export * from './snowflake/snowflake.interface';
+export * from './snowflake/snowflake.type';

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SNOWFLAKE_OPTION } from './snowflake.constants';
-import { SnowflakeOptions } from './snowflake.interface';
+import { SnowflakeOptions } from './snowflake.type';
 
 @Injectable()
 export class SnowflakeService {

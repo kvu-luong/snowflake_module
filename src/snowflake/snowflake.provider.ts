@@ -1,5 +1,5 @@
 import { Provider } from '@nestjs/common';
-import { SnowflakeOptions } from './snowflake.interface';
+import { SnowflakeOptions } from './snowflake.type';
 import { SNOWFLAKE_OPTION } from './snowflake.constants';
 
 export function createProvider(
