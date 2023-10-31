@@ -79,3 +79,22 @@ start project:
 ```
 yarn start:dev
 ```
+
+Do:
+constants.ts -> name of service will be inject
+provider.ts -> where to create function to get the configuration data
+type.ts -> where to declare options input with TypeScript
+service.ts -> where to create function
+module.ts -> where to export this service .
+
+### Install zookeeper with docker
+```
+docker run --name some-zookeeper --restart always -d -p 2181:2181 zookeeper
+```
+checking port:
+```
+telnet localhost 2181
+```
+function "generateSequence(data)" data is which we want to save to tracking later.
+
+[Link](https://hub.docker.com/_/zookeeper)

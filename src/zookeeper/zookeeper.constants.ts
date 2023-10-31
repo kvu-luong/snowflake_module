@@ -1,0 +1,1 @@
+export const ZOOKEEPER_OPTION = Symbol('ZOOKEEPER_OPTION');
