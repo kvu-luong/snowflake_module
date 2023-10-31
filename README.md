@@ -98,3 +98,21 @@ telnet localhost 2181
 function "generateSequence(data)" data is which we want to save to tracking later.
 
 [Link](https://hub.docker.com/_/zookeeper)
+
+- This is the way to get the timestamp from unique id
+  ```
+  // Parse the binary string to get a decimal number
+    const numericValue = parseInt(
+      timestamp41Bits.toString(2).padStart(41, '0'),
+      2,
+    );
+
+    // Convert the numeric value to a timestamp
+    const timestamp = new Date(numericValue).toISOString();
+    console.log({
+      timestamp: timestamp41Bits,
+      binaryTime: timestamp41Bits.toString(2).padStart(41, '0'),
+      afterCoverTime: timestamp,
+    });
+  ```
+  

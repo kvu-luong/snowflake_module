@@ -8,7 +8,7 @@ export class AppService {
     return this.snowFlakeService.generateId();
   }
 
-  async generateSlakeHash(): Promise<number> {
+  async generateSlakeHash(): Promise<string> {
     return this.snowFlakeService.generateSlakeHash();
   }
 }

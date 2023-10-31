@@ -4,7 +4,7 @@ import * as Zookeeper from 'node-zookeeper-client';
 
 @Injectable()
 export class ZookeeperService {
-  private readonly path: string = '/sequence';
+  private readonly path: string = '/';
   constructor(
     @Inject(ZOOKEEPER_OPTION) private readonly zookeeper: Zookeeper.Client,
   ) {
@@ -21,7 +21,7 @@ export class ZookeeperService {
           if (error) {
             reject(error);
           } else {
-            resolve(path);
+            resolve(parseInt(path.substring(this.path.length)));
           }
         },
       );
