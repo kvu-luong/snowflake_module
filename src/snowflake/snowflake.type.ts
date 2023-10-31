@@ -2,7 +2,7 @@ import { TRedisOptions } from 'src/redis/redis.type';
 import { TZookeeperOptions } from 'src/zookeeper/zookeeper.type';
 
 export type SnowflakeOptions = {
-  nodeId?: number;
+  isUseRedisOnly: boolean;
   redis: TRedisOptions;
-  zookeeper: TZookeeperOptions;
+  zookeeper?: TZookeeperOptions;
 };

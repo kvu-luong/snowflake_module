@@ -6,13 +6,13 @@ import * as zookeeper from 'node-zookeeper-client';
 export function createProvider(
   zookeeperOptions: TZookeeperOptions,
 ): Provider<TZookeeperOptions> {
-  try {
-    return {
-      provide: ZOOKEEPER_OPTION,
-      useFactory: () => {
-        const client = zookeeper.createClient(zookeeperOptions.hostUrl);
+  return {
+    provide: ZOOKEEPER_OPTION,
+    useFactory: () => {
+      try {
+        const client = zookeeper.createClient(zookeeperOptions?.hostUrl);
         client.once('connected', () => {
-          console.log('Connected to ZooKeeper');
+          console.log(`Connected to ZooKeeper ${new Date()}`);
           // Now you can perform ZooKeeper operations safely
         });
 
@@ -22,9 +22,9 @@ export function createProvider(
         });
         client.connect();
         return client;
-      },
-    };
-  } catch (error) {
-    console.error('Zookeeper is not ready');
-  }
+      } catch (error) {
+        console.warn('Not using zookeeper');
+      }
+    },
+  };
 }

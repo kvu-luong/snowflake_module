@@ -4,19 +4,19 @@ import { Provider } from '@nestjs/common';
 import { TRedisOptions } from './redis.type';
 
 export function createProvider(options: TRedisOptions): Provider<Redis> {
-  try {
-    return {
-      provide: REDIS_CLIENT,
-      useFactory: () => {
+  return {
+    provide: REDIS_CLIENT,
+    useFactory: () => {
+      try {
         const option: RedisOptions = {
           keyPrefix: options.prefix,
           db: options.db,
         };
 
         return new Redis(options.url, option);
-      },
-    };
-  } catch (error) {
-    console.error('Redis is not ready');
-  }
+      } catch (error) {
+        console.warn('Not using Redis');
+      }
+    },
+  };
 }

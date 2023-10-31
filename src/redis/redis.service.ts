@@ -12,7 +12,7 @@ export class RedisService {
     return this.repository.getTimestampInMillisecond();
   }
 
-  async getSequenceNumber(): Promise<number> {
-    return await this.repository.incr(SEQUENCE_NUMBER_KEY);
+  async getSequenceNumber(key: string): Promise<number> {
+    return await this.repository.incr(key);
   }
 }

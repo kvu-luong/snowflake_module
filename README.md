@@ -32,73 +32,37 @@
 $ yarn install
 ```
 
-## Running the app
 
-```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
 
 
 ## Implementation
-start project:
-- Firstly, we need to change a source root in **nest-cli.json** file to folder "testing_code_example"
-```
-yarn start:dev
-```
+Start project:
+  - Firstly, we need to change a source root in **nest-cli.json** file to folder "testing_code_example"
+    ```
+    yarn start:dev
+    ```
 
-Do:
-constants.ts -> name of service will be inject
-provider.ts -> where to create function to get the configuration data
-type.ts -> where to declare options input with TypeScript
-service.ts -> where to create function
-module.ts -> where to export this service .
+
+File structure explanation:
+  - constants.ts -> name of service will be inject
+  - provider.ts -> where to create function to get the configuration data
+  - type.ts -> where to declare options input with TypeScript
+  - service.ts -> where to create function
+  - module.ts -> where to export this service .
 
 ### Install zookeeper with docker
 ```
 docker run --name some-zookeeper --restart always -d -p 2181:2181 zookeeper
 ```
-checking port:
+Checking port:
 ```
 telnet localhost 2181
 ```
-function "generateSequence(data)" data is which we want to save to tracking later.
 
-[Link](https://hub.docker.com/_/zookeeper)
 
+[Zookeeper docker image](https://hub.docker.com/_/zookeeper)
+
+Code notes:
 - This is the way to get the timestamp from unique id
   ```
   // Parse the binary string to get a decimal number
@@ -115,4 +79,42 @@ function "generateSequence(data)" data is which we want to save to tracking late
       afterCoverTime: timestamp,
     });
   ```
+
+- Q&A:
+  - Cover binary to number : can't decode to know the timestamp
+  - nodeId:
+    - if we use zookeeper node id is auto increase -> why we not use redis 
+      => Just use zookeeper is case we need **guarantee the order** of of node 
+
+    - we can set node id manually in the configuration file or using ip address or random function. However nodeId can be duplicate in some case and take time to setup.
   
+  
+    Specific error scenarios:
+    ```
+    we have two node servers:
+    - Node 0 : 11111( time stamp ) + 0 ( machine id ) + 200 ( sequence )
+    - Node 1:  11111  (time stamp ) + 1 (machine id)  + 100 ( sequence )
+    ```
+    The request in Node 1 is before Node 0, but if we compare two snowflake id in binary then Id of node 0 < Id of node 1
+    => order of data is id of node 1 then id of node 0 
+    => **my solution**: change order of hash: **unsigned + timestamp + sequence + nodeId **
+
+      Then compare number with BigInt like this:
+      ```
+      let xzzv = BigInt('0110001011100001011110100001110101000001110001001000000000111100');
+      let bzzv = BigInt('0110001011100001011110100001110101000001110001001000000000111101');
+      ```
+
+  - How many node of zookeeper server ???
+    ```
+    get ip address of zookeeper server
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' some-zookeeper
+
+    install zookeeper client
+    docker run -it --rm zookeeper zkCli.sh -server 172.17.0.2:2181
+
+    check list with
+    ls /
+    ```
+
+    Default time of session : 30 seconds
