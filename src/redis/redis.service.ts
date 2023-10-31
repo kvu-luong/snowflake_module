@@ -4,7 +4,9 @@ import { SEQUENCE_NUMBER_KEY } from './redis.constants';
 
 @Injectable()
 export class RedisService {
-  constructor(private readonly repository: RedisRepository) {}
+  constructor(private readonly repository: RedisRepository) {
+    console.log('Redis service is running');
+  }
 
   async getTimestampAtUTC(): Promise<number> {
     return this.repository.getTimestampInMillisecond();

@@ -1,7 +1,8 @@
+import { TRedisOptions } from 'src/redis/redis.type';
+import { TZookeeperOptions } from 'src/zookeeper/zookeeper.type';
+
 export type SnowflakeOptions = {
-  dataCenter?: number;
-  worker?: number;
   nodeId?: number;
-  timestamp?: number;
-  seqMask?: number;
+  redis: TRedisOptions;
+  zookeeper: TZookeeperOptions;
 };
