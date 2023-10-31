@@ -22,12 +22,12 @@ export class AppController {
   }
 
   @Get('/getIdFromZKeeper')
-  async getIdFromZKeeper(): Promise<string> {
+  async getIdFromZKeeper(): Promise<number> {
     return await this.zookeeperService.generateUniqueSequenceId('node');
   }
 
   @Get('/zoo')
   async getZoo() {
-    return this.appService.testOther();
+    return this.appService.generateSlakeHash();
   }
 }

@@ -11,7 +11,7 @@ export class ZookeeperService {
     console.log('Zookeeper service is running');
   }
 
-  generateUniqueSequenceId(data: string): Promise<string> {
+  generateUniqueSequenceId(data: string): Promise<number> {
     return new Promise((resolve, reject) => {
       this.zookeeper.create(
         this.path,

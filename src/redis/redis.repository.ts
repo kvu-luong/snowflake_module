@@ -16,4 +16,8 @@ export class RedisRepository {
       seconds * 1000 + Math.round(microseconds / 1000);
     return timestampInMilliseconds;
   }
+
+  async incr(key: string): Promise<number> {
+    return await this.client.incr(key);
+  }
 }
